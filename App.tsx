@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react' // Add useState and useEffect
 import { StatusBar } from 'expo-status-bar'
 import { StyleSheet, View, ImageBackground } from 'react-native'
+import { useFonts } from 'expo-font'
+import AppLoading from 'expo-app-loading'
 import {
   MD3LightTheme as DefaultTheme,
   PaperProvider,
@@ -10,6 +12,10 @@ import {
   Card,
 } from 'react-native-paper'
 import Flag from 'react-native-flags'
+
+const [fontsLoaded] = useFonts({
+  CalculatorFont: require('./assets/fonts/IBMPlexSansArabic-Regular.ttf'), // Adjust the path and font name
+})
 
 const theme = {
   ...DefaultTheme,
@@ -21,6 +27,10 @@ const theme = {
 }
 
 export default function App() {
+  if (!fontsLoaded) {
+    return <AppLoading />
+  }
+
   const [ars, setArs] = useState('') // State for ARS
   const [usd, setUsd] = useState('') // State for USD
   const [ils, setIls] = useState('') // State for ILS
@@ -166,6 +176,7 @@ const styles = StyleSheet.create({
     margin: 10,
     // height: 40,
     maxWidth: 270,
+    fontFamily: 'CalculatorFont',
     textAlign: 'center',
   },
   flagContainer: {

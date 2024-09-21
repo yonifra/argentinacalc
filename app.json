@@ -18,10 +18,23 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.yonifra.argentinacalc"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-font"
+    ],
+    "assetBundlePatterns": [
+      "**/*",
+      "assets/fonts/*"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "57ea1ce7-c08e-44a2-83d6-75aadc8aa74f"
+      }
     }
   }
 }
