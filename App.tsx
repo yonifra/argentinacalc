@@ -1,6 +1,24 @@
 import { useEffect, useState } from 'react' // Add useState and useEffect
 import { StatusBar } from 'expo-status-bar'
-import { StyleSheet, Text, TextInput, View, Button } from 'react-native'
+import { StyleSheet, View, ImageBackground } from 'react-native'
+import {
+  MD3LightTheme as DefaultTheme,
+  PaperProvider,
+  Button,
+  TextInput,
+  Text,
+  Card,
+} from 'react-native-paper'
+import Flag from 'react-native-flags'
+
+const theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: 'tomato',
+    secondary: 'yellow',
+  },
+}
 
 export default function App() {
   const [ars, setArs] = useState('') // State for ARS
@@ -64,58 +82,100 @@ export default function App() {
     ) // Convert ILS to USD and ensure it's a string
   }
 
+  const resetValues = () => {
+    setArs('')
+    setUsd('')
+    setIls('')
+  }
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>ARS (Dollar Blue):</Text>
-      <TextInput
-        style={styles.input}
-        value={ars}
-        onChangeText={handleArsChange} // Update ARS state
-      />
-      <Text style={styles.text}>USD (US Dollar):</Text>
-      <TextInput
-        style={styles.input}
-        value={usd}
-        onChangeText={handleUsdChange} // Update USD state
-      />
-      <Text style={styles.text}>ILS (New Israeli Shekel):</Text>
-      <TextInput
-        style={styles.input}
-        value={ils}
-        onChangeText={handleIlsChange} // Update ILS state
-      />
-      <Button
-        title="Reset"
-        onPress={() => {
-          setArs('')
-          setUsd('')
-          setIls('')
-        }}
-      />
-      <StatusBar style="auto" />
-    </View>
+    <PaperProvider theme={theme}>
+      <ImageBackground
+        source={require('./assets/arg_israel.jpeg')}
+        style={styles.background}
+      >
+        <Card style={styles.container}>
+          <View style={styles.flagContainer}>
+            <Flag code="AR" size={32} type="flat" />
+            <Text variant="titleMedium" style={styles.text}>
+              ARS (Dollar Blue):
+            </Text>
+          </View>
+          <TextInput
+            style={styles.input}
+            value={ars}
+            mode="outlined"
+            onChangeText={handleArsChange} // Update ARS state
+          />
+          <View style={styles.flagContainer}>
+            <Flag code="US" size={32} type="flat" />
+            <Text variant="titleMedium" style={styles.text}>
+              USD (US Dollar):
+            </Text>
+          </View>
+          <TextInput
+            style={styles.input}
+            value={usd}
+            mode="outlined"
+            onChangeText={handleUsdChange} // Update USD state
+          />
+          <View style={styles.flagContainer}>
+            <Flag code="IL" size={32} type="flat" />
+            <Text variant="titleMedium" style={styles.text}>
+              ILS (New Israeli Shekel):
+            </Text>
+          </View>
+          <TextInput
+            style={styles.input}
+            value={ils}
+            mode="outlined"
+            onChangeText={handleIlsChange} // Update ILS state
+          />
+          <Button
+            children="Reset"
+            mode="contained"
+            style={styles.button}
+            icon="backspace"
+            onPress={resetValues}
+          />
+          <StatusBar style="auto" />
+        </Card>
+      </ImageBackground>
+    </PaperProvider>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
+    // flex: 1,
+    alignItems: 'stretch',
     justifyContent: 'center',
   },
-
+  button: {
+    margin: 10,
+  },
+  background: {
+    flex: 1, // Make sure the background covers the entire screen
+    justifyContent: 'center', // Center content vertically
+    alignItems: 'center', // Center content horizontally
+  },
   input: {
-    borderWidth: 1,
-    fontSize: 18,
+    fontSize: 28,
     borderColor: 'black',
-    width: '50%',
-    height: 40,
-    borderRadius: 10,
+    width: 270,
+    margin: 10,
+    // height: 40,
+    maxWidth: 270,
     textAlign: 'center',
+  },
+  flagContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
   },
   text: {
     fontSize: 18,
     margin: 10,
+    width: 'auto',
   },
 })
