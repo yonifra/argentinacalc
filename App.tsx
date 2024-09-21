@@ -15,7 +15,7 @@ const theme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    primary: 'tomato',
+    primary: 'darkblue',
     secondary: 'yellow',
   },
 }
@@ -59,7 +59,6 @@ export default function App() {
   const handleArsChange = (value: string) => {
     const arsValue = parseFloat(value) || 0
     setArs(value)
-    console.log(exchangeRates)
     setUsd((arsValue * arsToBlueRate * exchangeRates.usd).toFixed(2).toString()) // Convert ARS to USD and ensure it's a string
     setIls((arsValue * arsToBlueRate * exchangeRates.ils).toFixed(2).toString()) // Convert ARS to ILS and ensure it's a string
   }
@@ -148,6 +147,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     // flex: 1,
+    backgroundColor: 'rgba(255, 255, 255, 0.7)', // White with 80% opacity
     alignItems: 'stretch',
     justifyContent: 'center',
   },
